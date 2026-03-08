@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Simulador de Taxas Shopee</title>
-
   <meta name="description" content="Calcule exatamente quanto a Shopee cobra de taxa em cada venda." />
   <meta name="theme-color" content="#0f2027" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,30 +11,18 @@
   <meta name="apple-mobile-web-app-title" content="Taxas Shopee" />
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="manifest" id="manifest-placeholder" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0f2027;
-      --bg2: #203a43;
-      --bg3: #2c5364;
-      --card: rgba(255,255,255,0.06);
-      --border: rgba(255,255,255,0.1);
-      --orange: #f97316;
-      --orange2: #fb923c;
-      --green: #4ade80;
-      --green-soft: #86efac;
-      --red: #f87171;
-      --blue: #60a5fa;
-      --muted: #94a3b8;
-      --dim: #64748b;
-      --white: #ffffff;
+      --bg: #0f2027; --bg2: #203a43; --bg3: #2c5364;
+      --card: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.1);
+      --orange: #f97316; --orange2: #fb923c;
+      --green: #4ade80; --green-soft: #86efac;
+      --red: #f87171; --blue: #60a5fa;
+      --muted: #94a3b8; --dim: #64748b; --white: #ffffff;
     }
-
     html, body {
       min-height: 100%;
       background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
@@ -43,86 +30,45 @@
       font-family: 'Playfair Display', Georgia, serif;
       color: var(--white);
     }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 32px 16px 48px;
-    }
-
+    body { display: flex; flex-direction: column; align-items: center; padding: 32px 16px 48px; }
     #install-banner {
-      display: none;
-      width: 100%;
-      max-width: 420px;
+      display: none; width: 100%; max-width: 420px;
       background: linear-gradient(90deg, var(--orange), var(--orange2));
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 16px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      border-radius: 12px; padding: 12px 16px; margin-bottom: 16px;
+      align-items: center; justify-content: space-between; gap: 12px;
     }
     #install-banner.show { display: flex; }
     #install-banner p { font-size: 13px; font-family: 'DM Mono', monospace; flex: 1; }
     #install-banner button {
       background: white; color: var(--orange); border: none; border-radius: 8px;
-      padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer;
-      white-space: nowrap; font-family: 'DM Mono', monospace;
+      padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: 'DM Mono', monospace;
     }
-
     #offline-badge {
-      display: none;
-      background: rgba(248,113,113,0.15);
-      border: 1px solid rgba(248,113,113,0.3);
-      color: var(--red);
-      font-family: 'DM Mono', monospace;
-      font-size: 11px; letter-spacing: 1px;
-      padding: 6px 14px; border-radius: 20px; margin-bottom: 16px;
+      display: none; background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3);
+      color: var(--red); font-family: 'DM Mono', monospace; font-size: 11px;
+      letter-spacing: 1px; padding: 6px 14px; border-radius: 20px; margin-bottom: 16px;
     }
     #offline-badge.show { display: block; }
-
     .wrapper { width: 100%; max-width: 420px; }
-
     .header { text-align: center; margin-bottom: 28px; }
     .badge {
-      display: inline-block;
-      background: linear-gradient(90deg, var(--orange), var(--orange2));
-      border-radius: 6px; padding: 5px 14px;
-      font-family: 'DM Mono', monospace; font-size: 10px;
-      letter-spacing: 3px; color: white; margin-bottom: 12px; text-transform: uppercase;
+      display: inline-block; background: linear-gradient(90deg, var(--orange), var(--orange2));
+      border-radius: 6px; padding: 5px 14px; font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 3px; color: white; margin-bottom: 12px; text-transform: uppercase;
     }
     h1 { font-size: 26px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
     .subtitle { color: var(--muted); font-size: 13px; font-family: 'DM Mono', monospace; }
-
     .card {
-      background: var(--card);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      padding: 26px;
-      margin-bottom: 16px;
+      background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px; border: 1px solid var(--border); padding: 26px; margin-bottom: 16px;
     }
-
     .label {
-      display: block; color: var(--muted);
-      font-family: 'DM Mono', monospace; font-size: 10px;
-      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
+      display: block; color: var(--muted); font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
     }
-
-    /* Grid de dois campos lado a lado */
-    .input-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
     .input-wrap { position: relative; margin-bottom: 14px; }
     .input-wrap-inline { position: relative; }
-
     .input-prefix {
       position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
       color: var(--orange); font-weight: bold; font-size: 14px;
@@ -133,47 +79,24 @@
       color: var(--blue); font-weight: bold; font-size: 14px;
       font-family: 'DM Mono', monospace; pointer-events: none;
     }
-
     input[type="number"] {
-      width: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 12px 12px 12px 40px;
-      color: white; font-size: 16px;
-      font-family: 'DM Mono', monospace;
-      outline: none; -moz-appearance: textfield;
-      transition: border-color 0.2s;
+      width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; padding: 12px 12px 12px 40px; color: white; font-size: 16px;
+      font-family: 'DM Mono', monospace; outline: none; -moz-appearance: textfield; transition: border-color 0.2s;
     }
     input[type="number"]:focus { border-color: var(--orange); }
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-    /* Campo total — somente leitura */
     .total-input {
-      width: 100%;
-      background: rgba(249,115,22,0.1);
-      border: 1px solid rgba(249,115,22,0.3);
-      border-radius: 12px;
-      padding: 12px 12px 12px 40px;
-      color: var(--orange2); font-size: 16px;
-      font-family: 'DM Mono', monospace;
-      outline: none; cursor: default;
-      font-weight: bold;
+      width: 100%; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);
+      border-radius: 12px; padding: 12px 12px 12px 40px; color: var(--orange2); font-size: 16px;
+      font-family: 'DM Mono', monospace; font-weight: bold;
     }
-
-    /* Divider */
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      margin: 16px 0;
-    }
-
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 16px 0; }
     .toggle-row {
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(255,255,255,0.04); border-radius: 12px;
-      padding: 14px 16px; margin-bottom: 20px; cursor: pointer; user-select: none;
-      transition: background 0.2s;
+      background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 20px; cursor: pointer; user-select: none; transition: background 0.2s;
     }
     .toggle-row:hover { background: rgba(255,255,255,0.07); }
     .toggle-label { font-size: 14px; margin-bottom: 2px; }
@@ -185,98 +108,57 @@
     .toggle-switch.on { background: #22c55e; }
     .toggle-knob {
       width: 18px; height: 18px; background: white; border-radius: 50%;
-      position: absolute; top: 3px; left: 3px; transition: left 0.3s;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      position: absolute; top: 3px; left: 3px; transition: left 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
     .toggle-switch.on .toggle-knob { left: 23px; }
-
     .btn {
-      width: 100%;
-      background: linear-gradient(90deg, var(--orange), var(--orange2));
-      border: none; border-radius: 12px; padding: 15px; color: white;
-      font-size: 14px; font-family: 'DM Mono', monospace; font-weight: bold;
-      letter-spacing: 2px; cursor: pointer; transition: opacity 0.2s, transform 0.1s;
-      text-transform: uppercase;
+      width: 100%; background: linear-gradient(90deg, var(--orange), var(--orange2));
+      border: none; border-radius: 12px; padding: 15px; color: white; font-size: 14px;
+      font-family: 'DM Mono', monospace; font-weight: bold; letter-spacing: 2px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.1s; text-transform: uppercase;
     }
     .btn:hover { opacity: 0.9; }
     .btn:active { transform: scale(0.98); }
-
     .resultado { animation: fadeUp 0.4s ease; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
     .section-title {
       color: var(--muted); font-family: 'DM Mono', monospace;
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px;
     }
-
     .faixa-badge {
       background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3);
       border-radius: 10px; padding: 10px 14px; margin-bottom: 18px;
       font-size: 12px; color: var(--orange2); font-family: 'DM Mono', monospace; line-height: 1.6;
     }
-
-    /* Abas por unidade / total */
-    .tabs {
-      display: flex; gap: 8px; margin-bottom: 18px;
-    }
-    .tab {
-      flex: 1; padding: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04); color: var(--muted);
-      font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px;
-      text-align: center; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-    }
-    .tab.active {
-      background: rgba(249,115,22,0.15); border-color: rgba(249,115,22,0.4);
-      color: var(--orange2);
-    }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
     .linha {
       display: flex; justify-content: space-between; align-items: center;
       padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .linha:last-child { border-bottom: none; }
     .linha-label { color: var(--muted); font-size: 13px; }
     .linha-valor { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: bold; }
-
     .cor-white { color: var(--white); }
     .cor-red   { color: var(--red); }
     .cor-green { color: var(--green); }
     .cor-orange{ color: var(--orange); }
-    .cor-blue  { color: var(--blue); }
-
     .total-box {
-      margin-top: 18px;
-      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
-      border-radius: 12px; padding: 16px;
-      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 18px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center;
     }
     .total-label { color: var(--green-soft); font-size: 14px; }
     .total-valor { color: var(--green); font-size: 22px; font-family: 'DM Mono', monospace; font-weight: bold; }
-
-    /* Resumo de unidades */
     .unidades-box {
-      margin-top: 12px;
-      background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25);
-      border-radius: 12px; padding: 14px 16px;
-      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 10px; background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25);
+      border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
     }
     .unidades-label { color: #93c5fd; font-size: 13px; }
     .unidades-valor { color: var(--blue); font-size: 18px; font-family: 'DM Mono', monospace; font-weight: bold; }
-
     .info-title {
       color: var(--muted); font-family: 'DM Mono', monospace;
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
     }
     .faixa-item {
-      display: flex; justify-content: space-between;
-      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 12px; font-family: 'DM Mono', monospace;
+      display: flex; justify-content: space-between; padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 12px; font-family: 'DM Mono', monospace;
     }
     .faixa-item:last-child { border-bottom: none; }
     .faixa-range { color: var(--muted); }
@@ -284,26 +166,20 @@
   </style>
 </head>
 <body>
-
   <div id="offline-badge">⚡ MODO OFFLINE</div>
-
   <div id="install-banner">
     <p>📲 Instalar como app no celular</p>
     <button id="install-btn">Instalar</button>
   </div>
 
   <div class="wrapper">
-
     <div class="header">
       <div class="badge">Shopee</div>
       <h1>Simulador de Taxas</h1>
       <p class="subtitle">Calcule o que a Shopee cobra</p>
     </div>
 
-    <!-- Formulário -->
     <div class="card">
-
-      <!-- Linha: Unidades + Valor Unitário -->
       <div class="input-grid">
         <div>
           <label class="label">Unidades</label>
@@ -321,8 +197,7 @@
         </div>
       </div>
 
-      <!-- Valor Total calculado -->
-      <label class="label">Valor total (unidades × unitário)</label>
+      <label class="label">Valor total da venda</label>
       <div class="input-wrap" style="margin-bottom:20px;">
         <span class="input-prefix">R$</span>
         <div class="total-input" id="total-display">0,00</div>
@@ -330,93 +205,52 @@
 
       <hr class="divider" />
 
-      <!-- Toggle Pix -->
       <div class="toggle-row" id="toggle-pix">
         <div>
           <div class="toggle-label">💚 Pagamento via Pix</div>
           <div class="toggle-desc">Aplica o subsídio Pix da Shopee</div>
         </div>
-        <div class="toggle-switch" id="switch">
-          <div class="toggle-knob"></div>
-        </div>
+        <div class="toggle-switch" id="switch"><div class="toggle-knob"></div></div>
       </div>
 
       <button class="btn" onclick="calcular()">Calcular Taxa</button>
     </div>
 
-    <!-- Resultado -->
     <div id="resultado-box"></div>
 
-    <!-- Tabela de faixas -->
     <div class="card">
       <div class="info-title">📊 Tabela de Faixas</div>
-      <div class="faixa-item">
-        <span class="faixa-range">Até R$79,99</span>
-        <span class="faixa-taxa">20% + R$4,00 fixos</span>
-      </div>
-      <div class="faixa-item">
-        <span class="faixa-range">R$80 a R$99,99</span>
-        <span class="faixa-taxa">14% + R$16,00 · Pix 5%</span>
-      </div>
-      <div class="faixa-item">
-        <span class="faixa-range">R$100 a R$199,99</span>
-        <span class="faixa-taxa">14% + R$20,00 · Pix 5%</span>
-      </div>
-      <div class="faixa-item">
-        <span class="faixa-range">R$200 a R$499,99</span>
-        <span class="faixa-taxa">14% + R$26,00 · Pix 5%</span>
-      </div>
-      <div class="faixa-item">
-        <span class="faixa-range">Acima de R$500</span>
-        <span class="faixa-taxa">14% + R$26,00 · Pix 8%</span>
-      </div>
+      <div class="faixa-item"><span class="faixa-range">Até R$79,99</span><span class="faixa-taxa">20% + R$4,00 fixos</span></div>
+      <div class="faixa-item"><span class="faixa-range">R$80 a R$99,99</span><span class="faixa-taxa">14% + R$16,00 · Pix 5%</span></div>
+      <div class="faixa-item"><span class="faixa-range">R$100 a R$199,99</span><span class="faixa-taxa">14% + R$20,00 · Pix 5%</span></div>
+      <div class="faixa-item"><span class="faixa-range">R$200 a R$499,99</span><span class="faixa-taxa">14% + R$26,00 · Pix 5%</span></div>
+      <div class="faixa-item"><span class="faixa-range">Acima de R$500</span><span class="faixa-taxa">14% + R$26,00 · Pix 8%</span></div>
     </div>
-
   </div>
 
   <script>
-    // ── PWA Manifest ───────────────────────────────────────────────────
+    // PWA Manifest
     const manifestData = {
       name: "Simulador de Taxas Shopee", short_name: "Taxas Shopee",
-      description: "Calcule exatamente quanto a Shopee cobra de taxa em cada venda.",
       start_url: "./index.html", display: "standalone",
       background_color: "#0f2027", theme_color: "#0f2027", orientation: "portrait",
-      icons: [
-        { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%23f97316'/><text y='130' x='96' font-size='110' text-anchor='middle' fill='white'>%25</text></svg>", sizes: "192x192", type: "image/svg+xml" }
-      ]
+      icons: [{ src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%23f97316'/><text y='130' x='96' font-size='110' text-anchor='middle' fill='white'>%25</text></svg>", sizes: "192x192", type: "image/svg+xml" }]
     };
-    const blob = new Blob([JSON.stringify(manifestData)], { type: "application/json" });
-    document.getElementById("manifest-placeholder").href = URL.createObjectURL(blob);
+    document.getElementById("manifest-placeholder").href = URL.createObjectURL(new Blob([JSON.stringify(manifestData)], { type: "application/json" }));
 
-    // ── Service Worker ─────────────────────────────────────────────────
+    // Service Worker
     if ('serviceWorker' in navigator) {
-      const swCode = `
-        const CACHE = 'shopee-sim-v2';
-        self.addEventListener('install', e => {
-          e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html'])));
-          self.skipWaiting();
-        });
-        self.addEventListener('activate', e => {
-          e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
-          self.clients.claim();
-        });
-        self.addEventListener('fetch', e => {
-          e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('./index.html'))));
-        });
-      `;
-      const swBlob = new Blob([swCode], { type: 'application/javascript' });
-      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+      const sw = `const C='shopee-v3';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html'])));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./index.html'))));});`;
+      navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw], { type: 'application/javascript' }))).catch(()=>{});
     }
 
-    // ── Offline ────────────────────────────────────────────────────────
-    function updateOnlineStatus() {
-      document.getElementById('offline-badge').classList.toggle('show', !navigator.onLine);
-    }
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-    updateOnlineStatus();
+    // Offline
+    function updateOnline() { document.getElementById('offline-badge').classList.toggle('show', !navigator.onLine); }
+    window.addEventListener('online', updateOnline);
+    window.addEventListener('offline', updateOnline);
+    updateOnline();
 
-    // ── Install ────────────────────────────────────────────────────────
+    // Install
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault(); deferredPrompt = e;
@@ -430,28 +264,25 @@
       deferredPrompt = null;
     });
 
-    // ── Toggle Pix ─────────────────────────────────────────────────────
+    // Toggle Pix
     let pixAtivo = false;
     document.getElementById('toggle-pix').addEventListener('click', () => {
       pixAtivo = !pixAtivo;
       document.getElementById('switch').classList.toggle('on', pixAtivo);
     });
 
-    // ── Formatar moeda ─────────────────────────────────────────────────
-    function fmt(v) {
-      return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
+    // Formatar moeda
+    function fmt(v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
 
-    // ── Atualizar total ao digitar ─────────────────────────────────────
+    // Atualiza total em tempo real
     function atualizarTotal() {
-      const unidades = parseInt(document.getElementById('unidades').value) || 0;
-      const unitario = parseFloat(document.getElementById('preco-unit').value) || 0;
-      const total = unidades * unitario;
+      const un = parseInt(document.getElementById('unidades').value) || 0;
+      const vu = parseFloat(document.getElementById('preco-unit').value) || 0;
       document.getElementById('total-display').textContent =
-        total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        (un * vu).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // ── Calcular taxa ──────────────────────────────────────────────────
+    // Calcula taxa pela faixa de preço
     function calcularTaxa(preco, pix) {
       let pct, fixo, subsidio;
       if      (preco <= 79.99)  { pct = 0.20; fixo = 4;  subsidio = 0;    }
@@ -460,94 +291,84 @@
       else if (preco <= 499.99) { pct = 0.14; fixo = 26; subsidio = 0.05; }
       else                      { pct = 0.14; fixo = 26; subsidio = 0.08; }
 
-      const variavel   = preco * pct;
-      const totalBruto = variavel + fixo;
-      const descPix    = pix ? preco * subsidio : 0;
-      const taxaFinal  = totalBruto - descPix;
-      const recebe     = preco - taxaFinal;
+      const variavel  = preco * pct;
+      const descPix   = pix ? preco * subsidio : 0;
+      const taxaFinal = variavel + fixo - descPix;
+      const recebe    = preco - taxaFinal;
 
-      return { pct: pct*100, fixo, variavel, totalBruto, subsidio: subsidio*100, descPix, taxaFinal, recebe };
+      return { pct: pct*100, fixo, variavel, subsidio: subsidio*100, descPix, taxaFinal, recebe };
     }
 
+    // ✅ TAXA CALCULADA SEMPRE SOBRE O VALOR TOTAL DA VENDA
     function calcular() {
       const unidades = parseInt(document.getElementById('unidades').value) || 1;
       const unitario = parseFloat(document.getElementById('preco-unit').value);
 
-      if (!unitario || unitario <= 0) {
-        alert('Digite um valor unitário válido.');
-        return;
-      }
+      if (!unitario || unitario <= 0) { alert('Digite um valor unitário válido.'); return; }
 
       const totalVenda = unidades * unitario;
-      const rUnit  = calcularTaxa(unitario, pixAtivo);
-      const rTotal = calcularTaxa(totalVenda, pixAtivo);
+      const r          = calcularTaxa(totalVenda, pixAtivo);
+      const recebeUnit = r.recebe / unidades;
 
-      const box = document.getElementById('resultado-box');
+      const linhasPix = (pixAtivo && r.descPix > 0)
+        ? `<div class="linha"><span class="linha-label">Subsídio Pix (${r.subsidio}%)</span><span class="linha-valor cor-green">+ ${fmt(r.descPix)}</span></div>`
+        : '';
 
-      function renderLinhas(r, preco) {
-        let linhas = `
-          <div class="linha"><span class="linha-label">Preço de venda</span><span class="linha-valor cor-white">${fmt(preco)}</span></div>
-          <div class="linha"><span class="linha-label">Comissão (${r.pct}%)</span><span class="linha-valor cor-red">- ${fmt(r.variavel)}</span></div>
-          <div class="linha"><span class="linha-label">Taxa fixa</span><span class="linha-valor cor-red">- ${fmt(r.fixo)}</span></div>
-        `;
-        if (pixAtivo && r.descPix > 0) {
-          linhas += `<div class="linha"><span class="linha-label">Subsídio Pix (${r.subsidio}%)</span><span class="linha-valor cor-green">+ ${fmt(r.descPix)}</span></div>`;
-        }
-        linhas += `<div class="linha"><span class="linha-label">Taxa cobrada pela Shopee</span><span class="linha-valor cor-orange">${fmt(r.taxaFinal)}</span></div>`;
-        return linhas;
-      }
+      // Cores dinâmicas baseadas em positivo/negativo
+      const corTotal     = r.recebe >= 0 ? 'cor-green' : 'cor-red';
+      const corUnit      = recebeUnit >= 0 ? 'cor-green' : 'cor-red';
+      const iconeTotal   = r.recebe >= 0 ? '✅' : '⚠️';
+      const iconeUnit    = recebeUnit >= 0 ? '💰' : '⚠️';
+      const totalStyle   = r.recebe >= 0
+        ? 'background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);'
+        : 'background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3);';
+      const unitStyle    = recebeUnit >= 0
+        ? 'background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25);'
+        : 'background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25);';
+      const totalLabelColor = r.recebe >= 0 ? 'color: var(--green-soft);' : 'color: #fca5a5;';
+      const unitLabelColor  = recebeUnit >= 0 ? 'color: #93c5fd;' : 'color: #fca5a5;';
 
-      box.innerHTML = `
+      const boxUnidade = unidades > 1
+        ? `<div class="unidades-box" style="${unitStyle}">
+             <span class="unidades-label" style="${unitLabelColor}">${iconeUnit} Você recebe por unidade</span>
+             <span class="unidades-valor ${corUnit}">${fmt(recebeUnit)}</span>
+           </div>`
+        : '';
+
+      document.getElementById('resultado-box').innerHTML = `
         <div class="card resultado">
           <div class="section-title">Resultado do cálculo</div>
-
           <div class="faixa-badge">
-            📊 Faixa (unitário): ${rUnit.pct}% + ${fmt(rUnit.fixo)} fixos
-            ${pixAtivo && rUnit.subsidio > 0 ? ` · Subsídio Pix: ${rUnit.subsidio}%` : ''}
+            📊 Faixa sobre ${fmt(totalVenda)}: ${r.pct}% + ${fmt(r.fixo)} fixos
+            ${pixAtivo && r.subsidio > 0 ? ' &nbsp;·&nbsp; Subsídio Pix: ' + r.subsidio + '%' : ''}
           </div>
-
-          <!-- Abas -->
-          <div class="tabs">
-            <div class="tab active" onclick="mostrarAba('unit', this)">Por Unidade</div>
-            <div class="tab" onclick="mostrarAba('total', this)">Total (${unidades} un.)</div>
+          <div class="linha">
+            <span class="linha-label">📦 ${unidades} un. × ${fmt(unitario)}</span>
+            <span class="linha-valor cor-white">${fmt(totalVenda)}</span>
           </div>
-
-          <!-- Por unidade -->
-          <div class="tab-content active" id="aba-unit">
-            ${renderLinhas(rUnit, unitario)}
-            <div class="total-box">
-              <span class="total-label">✅ Você recebe (1 un.)</span>
-              <span class="total-valor">${fmt(rUnit.recebe)}</span>
-            </div>
+          <div class="linha">
+            <span class="linha-label">Comissão (${r.pct}%)</span>
+            <span class="linha-valor cor-red">- ${fmt(r.variavel)}</span>
           </div>
-
-          <!-- Total -->
-          <div class="tab-content" id="aba-total">
-            ${renderLinhas(rTotal, totalVenda)}
-            <div class="total-box">
-              <span class="total-label">✅ Você recebe (total)</span>
-              <span class="total-valor">${fmt(rTotal.recebe)}</span>
-            </div>
-            <div class="unidades-box">
-              <span class="unidades-label">📦 ${unidades} unidades × ${fmt(unitario)}</span>
-              <span class="unidades-valor">${fmt(totalVenda)}</span>
-            </div>
+          <div class="linha">
+            <span class="linha-label">Taxa fixa</span>
+            <span class="linha-valor cor-red">- ${fmt(r.fixo)}</span>
           </div>
-
+          ${linhasPix}
+          <div class="linha">
+            <span class="linha-label">Taxa total cobrada pela Shopee</span>
+            <span class="linha-valor cor-orange">${fmt(r.taxaFinal)}</span>
+          </div>
+          <div class="total-box" style="${totalStyle}">
+            <span class="total-label" style="${totalLabelColor}">${iconeTotal} Você recebe (total)</span>
+            <span class="total-valor ${corTotal}">${fmt(r.recebe)}</span>
+          </div>
+          ${boxUnidade}
         </div>
       `;
     }
 
-    function mostrarAba(aba, el) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('aba-' + aba).classList.add('active');
-    }
-
-    document.getElementById('preco-unit').addEventListener('keydown', e => {
-      if (e.key === 'Enter') calcular();
-    });
+    document.getElementById('preco-unit').addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); });
   </script>
 </body>
 </html>
