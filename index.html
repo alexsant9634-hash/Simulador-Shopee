@@ -205,6 +205,17 @@
 
       <hr class="divider" />
 
+      <!-- Seletor CPF / CNPJ -->
+      <label class="label">Tipo de vendedor</label>
+      <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <div id="btn-cnpj" onclick="setTipo('cnpj')" style="flex:1; padding:11px; border-radius:12px; text-align:center; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:1px; border:1px solid rgba(249,115,22,0.5); background:rgba(249,115,22,0.15); color:#fb923c; transition:all 0.2s;">
+          🏢 CNPJ / MEI
+        </div>
+        <div id="btn-cpf" onclick="setTipo('cpf')" style="flex:1; padding:11px; border-radius:12px; text-align:center; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:1px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; transition:all 0.2s;">
+          👤 CPF
+        </div>
+      </div>
+
       <div class="toggle-row" id="toggle-pix">
         <div>
           <div class="toggle-label">💚 Pagamento via Pix</div>
@@ -220,11 +231,13 @@
 
     <div class="card">
       <div class="info-title">📊 Tabela de Faixas</div>
-      <div class="faixa-item"><span class="faixa-range">Até R$79,99</span><span class="faixa-taxa">20% + R$4,00 fixos</span></div>
-      <div class="faixa-item"><span class="faixa-range">R$80 a R$99,99</span><span class="faixa-taxa">14% + R$16,00 · Pix 5%</span></div>
-      <div class="faixa-item"><span class="faixa-range">R$100 a R$199,99</span><span class="faixa-taxa">14% + R$20,00 · Pix 5%</span></div>
-      <div class="faixa-item"><span class="faixa-range">R$200 a R$499,99</span><span class="faixa-taxa">14% + R$26,00 · Pix 5%</span></div>
-      <div class="faixa-item"><span class="faixa-range">Acima de R$500</span><span class="faixa-taxa">14% + R$26,00 · Pix 8%</span></div>
+      <div id="tabela-faixas">
+        <div class="faixa-item"><span class="faixa-range">Até R$79,99</span><span class="faixa-taxa">20% + R$4,00 fixos</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$80 a R$99,99</span><span class="faixa-taxa">14% + R$16,00 · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$100 a R$199,99</span><span class="faixa-taxa">14% + R$20,00 · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$200 a R$499,99</span><span class="faixa-taxa">14% + R$26,00 · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">Acima de R$500</span><span class="faixa-taxa">14% + R$26,00 · Pix 8%</span></div>
+      </div>
     </div>
   </div>
 
@@ -282,14 +295,39 @@
         (un * vu).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    // Tipo de vendedor
+    let tipoVendedor = 'cnpj';
+    function setTipo(tipo) {
+      tipoVendedor = tipo;
+      const ativo   = 'border:1px solid rgba(249,115,22,0.5); background:rgba(249,115,22,0.15); color:#fb923c;';
+      const inativo = 'border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8;';
+      document.getElementById('btn-cnpj').style.cssText = document.getElementById('btn-cnpj').style.cssText.replace(/border:[^;]+;.*?color:[^;]+;/, tipo === 'cnpj' ? ativo : inativo);
+      document.getElementById('btn-cpf').style.cssText  = document.getElementById('btn-cpf').style.cssText.replace(/border:[^;]+;.*?color:[^;]+;/, tipo === 'cpf'  ? ativo : inativo);
+      // atualiza tabela de faixas
+      renderFaixas();
+    }
+
+    function renderFaixas() {
+      const cpf = tipoVendedor === 'cpf';
+      document.getElementById('tabela-faixas').innerHTML = `
+        <div class="faixa-item"><span class="faixa-range">Até R$79,99</span><span class="faixa-taxa">20% + ${cpf ? 'R$7,00' : 'R$4,00'} fixos</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$80 a R$99,99</span><span class="faixa-taxa">14% + ${cpf ? 'R$19,00' : 'R$16,00'} · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$100 a R$199,99</span><span class="faixa-taxa">14% + ${cpf ? 'R$23,00' : 'R$20,00'} · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">R$200 a R$499,99</span><span class="faixa-taxa">14% + ${cpf ? 'R$29,00' : 'R$26,00'} · Pix 5%</span></div>
+        <div class="faixa-item"><span class="faixa-range">Acima de R$500</span><span class="faixa-taxa">14% + ${cpf ? 'R$29,00' : 'R$26,00'} · Pix 8%</span></div>
+        ${cpf ? '<div class="faixa-item" style="color:#f97316; font-size:11px;"><span>⚠️ Inclui R$3,00 de taxa vendedor CPF em todas as faixas</span></div>' : ''}
+      `;
+    }
+
     // Calcula taxa pela faixa de preço
     function calcularTaxa(preco, pix) {
+      const cpf = tipoVendedor === 'cpf';
       let pct, fixo, subsidio;
-      if      (preco <= 79.99)  { pct = 0.20; fixo = 4;  subsidio = 0;    }
-      else if (preco <= 99.99)  { pct = 0.14; fixo = 16; subsidio = 0.05; }
-      else if (preco <= 199.99) { pct = 0.14; fixo = 20; subsidio = 0.05; }
-      else if (preco <= 499.99) { pct = 0.14; fixo = 26; subsidio = 0.05; }
-      else                      { pct = 0.14; fixo = 26; subsidio = 0.08; }
+      if      (preco <= 79.99)  { pct = 0.20; fixo = cpf ? 7  : 4;  subsidio = 0;    }
+      else if (preco <= 99.99)  { pct = 0.14; fixo = cpf ? 19 : 16; subsidio = 0.05; }
+      else if (preco <= 199.99) { pct = 0.14; fixo = cpf ? 23 : 20; subsidio = 0.05; }
+      else if (preco <= 499.99) { pct = 0.14; fixo = cpf ? 29 : 26; subsidio = 0.05; }
+      else                      { pct = 0.14; fixo = cpf ? 29 : 26; subsidio = 0.08; }
 
       const variavel  = preco * pct;
       const descPix   = pix ? preco * subsidio : 0;
@@ -339,7 +377,7 @@
         <div class="card resultado">
           <div class="section-title">Resultado do cálculo</div>
           <div class="faixa-badge">
-            📊 Faixa sobre ${fmt(totalVenda)}: ${r.pct}% + ${fmt(r.fixo)} fixos
+            📊 Faixa ${tipoVendedor.toUpperCase()} sobre ${fmt(totalVenda)}: ${r.pct}% + ${fmt(r.fixo)} fixos
             ${pixAtivo && r.subsidio > 0 ? ' &nbsp;·&nbsp; Subsídio Pix: ' + r.subsidio + '%' : ''}
           </div>
           <div class="linha">
@@ -369,6 +407,8 @@
     }
 
     document.getElementById('preco-unit').addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); });
+    // Render faixas ao carregar
+    renderFaixas();
   </script>
 </body>
 </html>
